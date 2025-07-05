@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+torch
+safetensors
+pip install -U accelerate==0.28.0
+transformers==4.38.2
+pip install -U evaluate==0.4.0
+pip install -U rouge_score==0.1.2
+pip install -U peft==0.3.0 --quiet
+pip install numpy==1.26

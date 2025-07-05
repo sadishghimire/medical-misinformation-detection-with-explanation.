@@ -1,0 +1,5 @@
+*.json
+*.safetensors
+*.model
+venv/
+api.txt
