@@ -3,3 +3,4 @@
 *.model
 venv/
 api.txt
+*.env

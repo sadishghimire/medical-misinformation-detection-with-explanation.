@@ -2,13 +2,14 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
-# from predict import predict
 from app.predict import predict
 import os
-
 from openai import OpenAI
-
 from fastapi.middleware.cors import CORSMiddleware
+
+from dotenv import load_dotenv
+load_dotenv()
+
 
 
 
@@ -59,7 +60,8 @@ async def predict(item: Item):
 #comment Init your OpenRouter client (DeepSeek)
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="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"
+    api_key = os.getenv('API_KEY')
+   
 )
 
 class ExplainInput(BaseModel):
