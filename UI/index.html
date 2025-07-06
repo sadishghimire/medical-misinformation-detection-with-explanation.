@@ -85,7 +85,7 @@
     }
     
     .login-btn {
-      background-color: transparent;
+      background-color: rgba(63, 118, 237, 0.5);
       border: 2px solid white;
       color: white;
     }
@@ -668,7 +668,7 @@
         <div class="logo">
           <i class="fas fa-check-circle"></i>
           <div class="logo-text">
-            <h1>TruthGPT Classifier</h1>
+            <h1>Medical Statement Classifier</h1>
             <p>Verify the accuracy of statements with AI-powered analysis</p>
         </div>
       </div>
@@ -1136,13 +1136,26 @@ verifyOtpBtn.addEventListener('click', () => {
     const explainData = await explainResponse.json();
     console.log("Explain API Response:", explainData);
 
+    const evidenceResponse = await fetch("http://127.0.0.1:8000/evidence", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      text: question,
+      label: classification
+        })
+     });
+
+      if (!explainResponse.ok) throw new Error("LLM API call failed");
+      const evidenceData= await evidenceResponse.json()      
+      console.log("Explain evidence:", evidenceData);
+
     // Update UI with LLM explanation
     document.getElementById('answerText').textContent = explainData.explanation;
     document.getElementById('label').textContent = classification;
     document.getElementById('label').className = 'label ' + classification.toLowerCase();
     document.getElementById('confidenceBar').style.width = confidence + '%';
     document.getElementById('confidenceValue').textContent = confidence + '%';
-    document.getElementById('justification').textContent = explainData.explanation;
+    document.getElementById('justification').textContent = evidenceData.evidence;
 
     document.getElementById('responseBox').style.display = 'block';
 
